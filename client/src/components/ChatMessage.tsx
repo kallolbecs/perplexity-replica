@@ -47,7 +47,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
               });
               const parts = result.split(/__LINK_([^_]+)_\[(\d+)\]__/);
               return (
-                <p key={index} className="mb-2 text-base leading-relaxed">
+                <p key={index} className="mb-2 text-base leading-relaxed break-words">
                   {parts.map((part, i) => {
                     if (i % 3 === 1) { // It's a link
                       const href = part;
@@ -76,10 +76,10 @@ export function ChatMessage({ message }: ChatMessageProps) {
               const level = line.match(/^#+/)[0].length;
               const text = line.replace(/^#+\s/, '');
               const className = level === 1 
-                ? 'text-2xl font-bold mb-3'
+                ? 'text-2xl font-bold mb-3 break-words'
                 : level === 2
-                ? 'text-xl font-semibold mb-2'
-                : 'text-lg font-medium mb-2';
+                ? 'text-xl font-semibold mb-2 break-words'
+                : 'text-lg font-medium mb-2 break-words';
               return (
                 <h3 key={index} className={className}>
                   {text}
@@ -90,7 +90,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
             // Handle bullet points
             if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
               return (
-                <li key={index} className="ml-4 mb-2 text-base leading-relaxed list-disc">
+                <li key={index} className="ml-4 mb-2 text-base leading-relaxed list-disc break-words">
                   {line.trim().substring(1).trim()}
                 </li>
               );
@@ -99,7 +99,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
             // Handle numbered lists
             if (/^\d+\./.test(line.trim())) {
               return (
-                <li key={index} className="ml-4 mb-2 text-base leading-relaxed list-decimal">
+                <li key={index} className="ml-4 mb-2 text-base leading-relaxed list-decimal break-words">
                   {line.trim()}
                 </li>
               );
@@ -108,7 +108,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
             // Regular paragraphs
             if (line.trim()) {
               return (
-                <p key={index} className="mb-2 text-base leading-relaxed">
+                <p key={index} className="mb-2 text-base leading-relaxed break-words">
                   {line}
                 </p>
               );
@@ -123,7 +123,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
   };
 
   return (
-    <div className={`flex gap-4 ${isUser ? 'flex-row-reverse' : 'flex-row'} items-start mx-auto max-w-4xl w-full`}>
+    <div className={`flex gap-4 ${isUser ? 'flex-row-reverse' : 'flex-row'} items-start mx-auto max-w-4xl w-full px-4 sm:px-0`}>
       <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
         isUser ? 'bg-primary text-primary-foreground' : 'bg-muted'
       }`}>
@@ -133,9 +133,9 @@ export function ChatMessage({ message }: ChatMessageProps) {
           <Bot className="h-5 w-5" />
         )}
       </div>
-      <div className="flex-1">
-        <Card className={`${isUser ? 'ml-auto' : 'mr-auto'} w-full`}>
-          <CardContent className="p-4">
+      <div className="flex-1 min-w-0">
+        <Card className={`${isUser ? 'ml-auto' : 'mr-auto'} w-full overflow-hidden`}>
+          <CardContent className="p-4 overflow-x-auto">
             {!isUser && message.citations && (
               <SourcePreview 
                 sources={message.citations.map((url, idx) => ({
@@ -146,7 +146,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                 }))}
               />
             )}
-            <div className="prose prose-lg dark:prose-invert max-w-none">
+            <div className="prose prose-lg dark:prose-invert max-w-none break-words">
               {formatContent(message.content)}
             </div>
           </CardContent>
