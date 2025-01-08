@@ -81,8 +81,8 @@ export function SourcePreview({ sources }: SourcePreviewProps) {
 
   return (
     <div className="mb-6">
-      <div className="grid grid-cols-1 sm:grid-cols-6 gap-4">
-        {visibleSources.slice(0, isMobile ? 1 : 5).map((source, idx) => (
+      <div className="grid grid-cols-2 sm:grid-cols-6 gap-4">
+        {visibleSources.slice(0, isMobile ? 2 : 5).map((source, idx) => (
           <div key={idx} className="col-span-1">
             <SourceCard source={source} index={idx} />
           </div>
