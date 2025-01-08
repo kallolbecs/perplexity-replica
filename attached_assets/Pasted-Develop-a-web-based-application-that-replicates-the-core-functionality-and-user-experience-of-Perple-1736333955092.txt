@@ -1,0 +1,111 @@
+Develop a web-based application that replicates the core functionality and user experience of Perplexity AI. This includes a conversational search interface, cited sources, contextual awareness, and a focus on direct answers.
+
+Target Audience: Users seeking direct answers to questions with source information, not just links.
+
+Key Features:
+
+Conversational search interface
+
+LLM-powered answer generation
+
+Citations with links to sources
+
+Context retention of the previous 10 conversations.
+
+Responsive design for various screen sizes (desktop, mobile, tablet)
+
+Technology Stack:
+
+Frontend: Use HTML, CSS, and JavaScript (with a framework like React, Vue, or Svelte recommended for better organization and responsiveness).
+
+Backend: Node.js (Express.js) or Python (Flask/FastAPI)
+
+LLM: Google Gemini 2.0 Flash (API key will be provided during development via prompt to user).
+
+Web Research: Utilize open-source tools or services.
+
+II. Detailed Requirements
+
+User Interface (Frontend):
+
+Search Input: A clear and prominent text input field for user questions.
+
+Chat Area: A well-organized chat area to display user questions and AI responses.
+
+Loading Indicators: Indicate when the AI is processing a question.
+
+Citations Display: Neatly display citations below responses with source links.
+
+Responsive Layout: Ensure the layout is optimized for desktop, mobile, and tablet devices.
+
+Clear Visual Hierarchy: Make the flow of conversation easy to follow visually.
+
+User Authentication [Optional for V1: consider this if you plan to extend features]
+
+Implement a basic username/password authentication system (local storage or cookie-based for persistence).
+
+Backend Logic (API):
+
+API Endpoint: Create an endpoint /ask that accepts a user's question as a POST request.
+
+LLM Integration:
+
+Use the Gemini 2.0 Flash API to process user questions.
+
+Implement API key handling securely (via prompt to user during development)
+
+Send the question to the LLM API, receive the response, and extract relevant citations.
+
+Web Research Integration:
+
+Use a library or API to perform web searches based on the user's question.
+
+Implement logic to fetch relevant web page content.
+
+Handle rate limits and potential API issues gracefully.
+
+Examples :
+
+Open-source Search Engines: Searx, Whoogle
+
+Open-source Web Scraping Libraries: Cheerio, Beautiful Soup 4, Puppeteer
+
+Context Management:
+
+Maintain an array (or similar data structure) to store the previous 10 conversation turns (user question and AI response).
+
+Use this context when sending subsequent questions to the LLM API (add to prompt as history of conversation).
+
+Implement a method to clear conversation history.
+
+LLM Prompting Strategy:
+
+Clear Instructions: The prompt sent to the LLM should include specific instructions to:
+
+Provide a direct answer to the question.
+
+Cite all sources used to generate the response.
+
+Maintain a conversational tone.
+
+Use prior conversation history for context.
+
+Format the citation source as a link
+
+Example:
+
+"You are a conversational AI research assistant. Your role is to provide direct answers to user questions and cite sources used to generate your answer. Consider the previous conversation history as context. Please keep the answers conversational and short. For each citation include link to the source. Format citations as a link. Here is the previous conversation: {conversation_history} and here is the user question: {user_question}"
+
+Data Handling:
+
+Store the conversation history securely (client-side or server-side, as decided).
+
+Implement error handling for API calls and data processing.
+
+Testing:
+
+Provide a simple test to verify the response given by the application along with the source link.
+
+Test the conversation context using a complex question followed by simple follow up questions.
+
+Ensure the response is rendered properly on mobile.
