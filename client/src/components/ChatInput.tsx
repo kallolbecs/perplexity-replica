@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
+import { useState, useRef, useEffect } from "react";
+import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Send, Loader2 } from "lucide-react";
 
@@ -10,6 +10,7 @@ interface ChatInputProps {
 
 export function ChatInput({ onSubmit, isLoading }: ChatInputProps) {
   const [input, setInput] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,14 +20,34 @@ export function ChatInput({ onSubmit, isLoading }: ChatInputProps) {
     }
   };
 
+  // Auto-resize textarea as content changes
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`; // Max height of 200px
+    }
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [input]);
+
   return (
     <form onSubmit={handleSubmit} className="sticky bottom-4 mx-auto max-w-3xl w-full">
       <div className="relative flex gap-2 bg-card p-2 rounded-lg shadow-lg">
-        <Input
+        <Textarea
+          ref={textareaRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              handleSubmit(e);
+            }
+          }}
           placeholder="Ask anything..."
-          className="flex-1 py-6 text-base bg-background"
+          className="flex-1 py-2 text-base bg-background min-h-[48px] max-h-[200px] resize-none"
           disabled={isLoading}
         />
         <Button 

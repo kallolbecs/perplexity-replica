@@ -109,12 +109,12 @@ export function registerRoutes(app: Express): Server {
       console.log('Initializing Gemini API...');
       const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY);
       const model = genAI.getGenerativeModel({ 
-        model: "gemini-pro",
+        model: "gemini-2.0-flash-exp",
         generationConfig: {
           temperature: 0.7,
           topP: 0.9,
           topK: 40,
-          maxOutputTokens: 4096,
+          maxOutputTokens: 20000,
         },
       });
 
