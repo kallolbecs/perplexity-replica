@@ -82,34 +82,36 @@ export function SourcePreview({ sources }: SourcePreviewProps) {
   return (
     <div className="mb-6">
       <div className="grid grid-cols-2 sm:grid-cols-6 gap-4">
-        {visibleSources.slice(0, isMobile ? 2 : 5).map((source, idx) => (
-          <div key={idx} className="col-span-1">
+        {visibleSources.slice(0, isMobile ? 1 : 5).map((source, idx) => (
+          <div key={idx} className={`${isMobile ? 'col-span-1' : 'col-span-1'}`}>
             <SourceCard source={source} index={idx} />
           </div>
         ))}
         {hasMoreSources && (
-          <Sheet>
-            <SheetTrigger asChild>
-              <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
-                <CardContent className="p-4 flex flex-col items-center justify-center h-full gap-2">
-                  <ChevronRight className="h-6 w-6" />
-                  <p className="text-sm font-medium">
-                    Show All ({sources.length})
-                  </p>
-                </CardContent>
-              </Card>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-full sm:w-[400px]">
-              <ScrollArea className="h-full pr-4">
-                <div className="space-y-4 py-4">
-                  <h3 className="text-lg font-semibold mb-4">All Sources</h3>
-                  {sources.map((source, idx) => (
-                    <SourceCard key={idx} source={source} index={idx} />
-                  ))}
-                </div>
-              </ScrollArea>
-            </SheetContent>
-          </Sheet>
+          <div className={`${isMobile ? 'col-span-1' : 'col-span-1'}`}>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+                  <CardContent className="p-4 flex flex-col items-center justify-center h-full gap-2">
+                    <ChevronRight className="h-6 w-6" />
+                    <p className="text-sm font-medium">
+                      Show All ({sources.length})
+                    </p>
+                  </CardContent>
+                </Card>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-full sm:w-[400px]">
+                <ScrollArea className="h-full pr-4">
+                  <div className="space-y-4 py-4">
+                    <h3 className="text-lg font-semibold mb-4">All Sources</h3>
+                    {sources.map((source, idx) => (
+                      <SourceCard key={idx} source={source} index={idx} />
+                    ))}
+                  </div>
+                </ScrollArea>
+              </SheetContent>
+            </Sheet>
+          </div>
         )}
       </div>
     </div>
