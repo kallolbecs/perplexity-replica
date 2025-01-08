@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChevronRight, Link as LinkIcon } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Source {
   url: string;
@@ -16,10 +17,13 @@ interface SourcePreviewProps {
 }
 
 export function SourcePreview({ sources }: SourcePreviewProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isMobile = useIsMobile();
+
   if (!sources.length) return null;
 
   const visibleSources = sources.slice(0, 5);
-  const hasMoreSources = sources.length > 5;
+  const hasMoreSources = sources.length > (isMobile ? 1 : 5);
 
   const SourceCard = ({ source, index }: { source: Source; index: number }) => {
     const url = new URL(source.url);
@@ -77,8 +81,8 @@ export function SourcePreview({ sources }: SourcePreviewProps) {
 
   return (
     <div className="mb-6">
-      <div className="grid grid-cols-6 gap-4">
-        {visibleSources.map((source, idx) => (
+      <div className="grid grid-cols-1 sm:grid-cols-6 gap-4">
+        {visibleSources.slice(0, isMobile ? 1 : 5).map((source, idx) => (
           <div key={idx} className="col-span-1">
             <SourceCard source={source} index={idx} />
           </div>
